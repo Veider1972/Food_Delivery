@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">Food Delivery</string>
+
+    //Navigation
+    <string name="navigation_main">Главная</string>
+    <string name="navigation_search">Поиск</string>
+    <string name="navigation_basket">Корзина</string>
+    <string name="navigation_account">Аккаунт</string>
+    <string name="back_button">Кнопка назад</string>
+    <string name="close_button">Закрыть экран</string>
+    <string name="favorite_button">Добавить в избранное</string>
+
+    //Main
+    <string name="load_category_error">Ошибка получения списка категорий</string>
+    <string name="category_button">Выбрать категорию продукта</string>
+
+    //Dishes
+    <string name="load_dishes_error">Ошибка получения списка продуктов</string>
+    <string name="load_tags_error">Ошибка получения списка тегов продуктов</string>
+
+    //Product
+    <string name="product_price">%d ₽</string>
+    <string name="product_weight">&#160;· %dг</string>
+    <string name="add_to_basket">Добавить в корзину</string>
+    <string name="product_photo">Внешний вид товара</string>
+
+    // Search
+    <string name="hello_search_fragment">Реализация фрагмента\nне предусмотрена в ТЗ</string>
+
+    //Basket
+    <string name="basket_empty">Вы ещё ничего не выбрали</string>
+    <string name="basket_pay_button_title">Оплатить %s ₽</string>
+    <string name="basket_paid_message">Заказ оформлен</string>
+    <string name="add_button">Увеличить количество</string>
+    <string name="substract_button">Уменьшить количество</string>
+
+    //Account
+    <string name="location">Москва</string>
+    <string name="load_account_error">Ошибка получения данных аккаунта</string>
+    <string name="account_photo">Фотография пользователя</string>
+</resources>

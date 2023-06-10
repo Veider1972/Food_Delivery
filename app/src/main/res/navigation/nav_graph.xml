@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="ru.veider.fooddelivery.presentation.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="ru.veider.fooddelivery.presentation.basket.BasketFragment"
+        android:label="BasketFragment"
+        tools:layout="@layout/fragment_basket"/>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="ru.veider.fooddelivery.presentation.account.AccountFragment"
+        android:label="AccountFragment"
+        tools:layout="@layout/fragment_account" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="ru.veider.fooddelivery.presentation.category.CategoryFragment"
+        android:label="CategoryFragment"
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/action_categoryFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="ru.veider.fooddelivery.presentation.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"/>
+    <dialog
+        android:id="@+id/productFragment"
+        android:name="ru.veider.fooddelivery.presentation.product.ProductFragment"
+        android:label="fragment_product"
+        tools:layout="@layout/fragment_product" />
+
+
+</navigation>

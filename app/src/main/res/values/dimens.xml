@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="global_padding">16dp</dimen>
+
+    <dimen name="padding_1dp">1dp</dimen>
+    <dimen name="padding_2dp">2dp</dimen>
+    <dimen name="padding_3dp">3dp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="padding_6dp">6dp</dimen>
+    <dimen name="padding_7dp">7dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="padding_14dp">14dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_19dp">19dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
+    <dimen name="padding_50dp">50dp</dimen>
+
+
+    <dimen name="image_44dp">44dp</dimen>
+    <dimen name="image_62dp">62dp</dimen>
+    <dimen name="image_250dp">250dp</dimen>
+
+
+    <dimen name="shimmer_14dp">14dp</dimen>
+    <dimen name="shimmer_20dp">20dp</dimen>
+    <dimen name="shimmer_22dp">22dp</dimen>
+    <dimen name="shimmer_24dp">24dp</dimen>
+    <dimen name="shimmer_35dp">35dp</dimen>
+
+
+    <dimen name="corner_6dp">6dp</dimen>
+    <dimen name="corner_8dp">8dp</dimen>
+    <dimen name="corner_10dp">10dp</dimen>
+    <dimen name="corner_15dp">15dp</dimen>
+
+</resources>
