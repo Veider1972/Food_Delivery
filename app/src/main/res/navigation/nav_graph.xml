@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="ru.veider.fooddelivery.presentation.main.MainFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.main.ui.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,17 +16,17 @@
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
-        android:name="ru.veider.fooddelivery.presentation.basket.BasketFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.basket.ui.BasketFragment"
         android:label="BasketFragment"
         tools:layout="@layout/fragment_basket"/>
     <fragment
         android:id="@+id/accountFragment"
-        android:name="ru.veider.fooddelivery.presentation.account.AccountFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.account.ui.AccountFragment"
         android:label="AccountFragment"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="ru.veider.fooddelivery.presentation.category.CategoryFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.category.ui.CategoryFragment"
         android:label="CategoryFragment"
         tools:layout="@layout/fragment_category">
 
@@ -36,12 +36,12 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="ru.veider.fooddelivery.presentation.search.SearchFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search"/>
     <dialog
         android:id="@+id/productFragment"
-        android:name="ru.veider.fooddelivery.presentation.product.ProductFragment"
+        android:name="ru.veider.fooddelivery.presentation.ui.product.ProductFragment"
         android:label="fragment_product"
         tools:layout="@layout/fragment_product" />
 

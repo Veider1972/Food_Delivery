@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_dialog"
     android:padding="@dimen/global_padding"
-    tools:context=".presentation.product.ProductFragment">
+    tools:context=".presentation.ui.product.ProductFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
