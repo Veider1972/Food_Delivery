@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.domain.model.Account
-import ru.veider.fooddelivery.core.datatype.ScreenState
+import ru.veider.core.datatype.ScreenState
 import java.text.SimpleDateFormat
 import java.util.Date
 

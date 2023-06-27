@@ -11,7 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.FragmentAccountBinding
-import ru.veider.fooddelivery.core.datatype.ScreenState
+import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.presentation.ui.account.vm.AccountViewModel
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
