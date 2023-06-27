@@ -18,7 +18,7 @@ import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.CustomTabBinding
 import ru.veider.fooddelivery.databinding.FragmentCategoryBinding
 import ru.veider.fooddelivery.domain.model.Product
-import ru.veider.fooddelivery.core.datatype.ScreenState
+import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.presentation.ui.product.ProductFragment
 import ru.veider.fooddelivery.presentation.ui.account.vm.AccountViewModel
 import ru.veider.fooddelivery.presentation.ui.category.vm.CategoryViewModel

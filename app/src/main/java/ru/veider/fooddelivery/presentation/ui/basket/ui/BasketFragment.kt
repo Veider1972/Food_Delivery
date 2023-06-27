@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.FragmentBasketBinding
-import ru.veider.fooddelivery.core.datatype.ScreenState
+import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.domain.model.Basket
 import ru.veider.fooddelivery.presentation.ui.account.vm.AccountViewModel
 import ru.veider.fooddelivery.presentation.ui.basket.vm.BasketViewModel
