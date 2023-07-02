@@ -12,9 +12,11 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.veider.data.datasource.DataSource
+import ru.veider.data.datasource.DataSourceImpl
 import ru.veider.data.datasource.api.WebApi
-import ru.veider.data.repository.DataSource
-import ru.veider.data.repository.DataSourceImpl
+import ru.veider.data.repository.Repo
+import ru.veider.data.repository.RepoImpl
 
 
 val dataModule = module {
@@ -43,6 +45,7 @@ val dataModule = module {
 		.client(createOkHttpClient(WebInterceptor())).build().create(WebApi::class.java)
 
 	single { provideWebAPI() }
+	singleOf(::RepoImpl) { bind<Repo>() }
 	singleOf(::DataSourceImpl) { bind<DataSource>() }
 	single { provideGson() }
 }

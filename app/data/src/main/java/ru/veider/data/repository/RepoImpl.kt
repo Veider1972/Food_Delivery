@@ -1,16 +1,16 @@
-package ru.veider.usecases
+package ru.veider.data.repository
 
 import ru.veider.core.datatype.Transport
-import ru.veider.data.repository.Repo
+import ru.veider.data.datasource.DataSource
 import ru.veider.fooddelivery.domain.model.Category
 import ru.veider.fooddelivery.domain.model.Product
 
-class UseCasesImpl(
-	private val repo: Repo
-) : UseCases {
+class RepoImpl(
+	private val dataSource: DataSource
+): Repo {
 	override suspend fun getCategories(): Transport<List<Category>> =
 		try {
-			when (val categoryList = repo.getCategories()) {
+			when (val categoryList = dataSource.getCategories()) {
 				is Transport.Success -> Transport.Success(categoryList.data)
 				is Transport.Error -> Transport.Error(categoryList.error)
 			}
@@ -20,7 +20,7 @@ class UseCasesImpl(
 
 	override suspend fun getDishes(): Transport<List<Product>> =
 		try {
-			when (val dishesList = repo.getDishes()) {
+			when (val dishesList = dataSource.getDishes()) {
 				is Transport.Success -> Transport.Success(dishesList.data)
 				is Transport.Error -> Transport.Error(dishesList.error)
 			}
