@@ -1,4 +1,4 @@
-package ru.veider.data.repository
+package ru.veider.data.datasource
 
 import ru.veider.core.datatype.Transport
 import ru.veider.fooddelivery.domain.model.Category
