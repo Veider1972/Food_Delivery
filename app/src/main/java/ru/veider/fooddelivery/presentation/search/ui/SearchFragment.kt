@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.presentation.search
+package ru.veider.fooddelivery.presentation.search.ui
 
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding

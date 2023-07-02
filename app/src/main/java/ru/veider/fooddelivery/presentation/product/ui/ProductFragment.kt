@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.presentation.product
+package ru.veider.fooddelivery.ru.veider.fooddelivery.presentation.product.ui
 
 import android.app.Dialog
 import android.os.Bundle
