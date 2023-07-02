@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.domain.model
+package ru.veider.domain.model
 
 data class Account(
 	val id: Int,

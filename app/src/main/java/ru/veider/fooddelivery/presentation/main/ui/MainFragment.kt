@@ -13,7 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.FragmentMainBinding
-import ru.veider.fooddelivery.domain.model.Category
+import ru.veider.domain.model.Category
 import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.presentation.category.ui.CategoryFragment
 import ru.veider.fooddelivery.presentation.account.vm.AccountViewModel
@@ -52,7 +52,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 						)
 					)
 				}
-			})
+			}
+		)
 		binding.categoryList.adapter = adapter
 	}
 
@@ -65,7 +66,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
 				is ScreenState.Success -> {
 					categoryShimmer(false)
-					adapter.submitList(it.data)
+					adapter.items = it.data
+					adapter.notifyItemRangeChanged(0, it.data.size-1)
 				}
 
 				is ScreenState.Error -> {

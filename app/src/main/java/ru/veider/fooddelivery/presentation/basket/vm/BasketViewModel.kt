@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import ru.veider.fooddelivery.domain.model.Basket
+import ru.veider.domain.model.Basket
 import java.lang.Exception
 
 class BasketViewModel(

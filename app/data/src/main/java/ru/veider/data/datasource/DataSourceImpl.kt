@@ -4,8 +4,8 @@ import ru.veider.core.datatype.Transport
 import ru.veider.data.datasource.api.WebApi
 import ru.veider.data.repository.mapper.toCategory
 import ru.veider.data.repository.mapper.toDishes
-import ru.veider.fooddelivery.domain.model.Category
-import ru.veider.fooddelivery.domain.model.Product
+import ru.veider.domain.model.Category
+import ru.veider.domain.model.Product
 
 class DataSourceImpl(
 	private val webApi: WebApi

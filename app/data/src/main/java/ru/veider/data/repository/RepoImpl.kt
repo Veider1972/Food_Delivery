@@ -2,8 +2,8 @@ package ru.veider.data.repository
 
 import ru.veider.core.datatype.Transport
 import ru.veider.data.datasource.DataSource
-import ru.veider.fooddelivery.domain.model.Category
-import ru.veider.fooddelivery.domain.model.Product
+import ru.veider.domain.model.Category
+import ru.veider.domain.model.Product
 
 class RepoImpl(
 	private val dataSource: DataSource

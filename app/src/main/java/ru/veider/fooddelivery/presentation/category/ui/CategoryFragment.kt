@@ -17,9 +17,9 @@ import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.CustomTabBinding
 import ru.veider.fooddelivery.databinding.FragmentCategoryBinding
-import ru.veider.fooddelivery.domain.model.Product
+import ru.veider.domain.model.Product
 import ru.veider.core.datatype.ScreenState
-import ru.veider.fooddelivery.ru.veider.fooddelivery.presentation.product.ui.ProductFragment
+import ru.veider.fooddelivery.presentation.product.ui.ProductFragment
 import ru.veider.fooddelivery.presentation.account.vm.AccountViewModel
 import ru.veider.fooddelivery.presentation.category.vm.CategoryViewModel
 
@@ -161,7 +161,8 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 					if (tag != null){
 						filterDishesByTag(tag)
 					} else {
-						adapter.submitList(it.data)
+						adapter.items = it.data
+						adapter.notifyItemRangeChanged(0, it.data.size-1)
 					}
 				}
 
@@ -178,7 +179,8 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 		if (categoryViewModel.dishesDataList.value is ScreenState.Success) {
 			val list = (categoryViewModel.dishesDataList.value as ScreenState.Success).data
 			val filteredList = list.filter { tag in it.tags }
-			adapter.submitList(filteredList)
+			adapter.items = filteredList
+			adapter.notifyItemRangeChanged(0, filteredList.size-1)
 			if (filteredList.isNotEmpty()) {
 				binding.dishesList.post {
 					binding.dishesList.smoothScrollToPosition(0)
