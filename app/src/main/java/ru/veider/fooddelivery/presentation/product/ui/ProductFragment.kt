@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.ru.veider.fooddelivery.presentation.product.ui
+package ru.veider.fooddelivery.presentation.product.ui
 
 import android.app.Dialog
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.FragmentProductBinding
-import ru.veider.fooddelivery.domain.model.Basket
+import ru.veider.domain.model.Basket
 import ru.veider.fooddelivery.presentation.basket.vm.BasketViewModel
 
 class ProductFragment : DialogFragment(R.layout.fragment_product) {

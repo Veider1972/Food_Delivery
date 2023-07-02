@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.FragmentBasketBinding
 import ru.veider.core.datatype.ScreenState
-import ru.veider.fooddelivery.domain.model.Basket
+import ru.veider.domain.model.Basket
 import ru.veider.fooddelivery.presentation.account.vm.AccountViewModel
 import ru.veider.fooddelivery.presentation.basket.vm.BasketViewModel
 import java.util.Locale
@@ -86,7 +86,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 				productList.forEach { product ->
 					list.add(product.copy())
 				}
-				adapter.submitList(list)
+				adapter.items = list
 				val sum = productList.sumOf { it.price * it.counter }
 				binding.paidButton.text = getString(R.string.basket_pay_button_title, "%,d".format(Locale("RU"), sum))
 			} else {

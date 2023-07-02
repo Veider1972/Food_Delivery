@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.domain.model
+package ru.veider.domain.model
 
 data class Basket(
 	val id: Long,
@@ -7,4 +7,4 @@ data class Basket(
 	val price: Int,
 	val weight: Int,
 	var counter: Int
-)
+):IBasket

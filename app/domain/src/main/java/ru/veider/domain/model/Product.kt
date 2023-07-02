@@ -1,4 +1,4 @@
-package ru.veider.fooddelivery.domain.model
+package ru.veider.domain.model
 
 data class Product(
 	val id: Long,
@@ -8,4 +8,4 @@ data class Product(
 	val description: String,
 	val imageUrl: String,
 	val tags: List<String>
-)
+):IProduct

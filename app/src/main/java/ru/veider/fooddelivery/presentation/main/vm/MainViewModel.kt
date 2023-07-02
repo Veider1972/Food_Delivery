@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.veider.fooddelivery.domain.model.Category
+import ru.veider.domain.model.Category
 import ru.veider.usecases.UseCases
 
 class MainViewModel(

@@ -78,6 +78,10 @@ dependencies {
     // Splash screen
     implementation 'androidx.core:core-splashscreen:1.0.1'
 
+    //Delegate Adapter
+    implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl:4.3.2'
+    implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2'
+
     implementation project(":app:core")
     implementation project(":app:data")
     implementation project(":app:domain")
