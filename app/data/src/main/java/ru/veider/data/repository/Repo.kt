@@ -1,10 +1,9 @@
 package ru.veider.data.repository
 
-import ru.veider.core.datatype.Transport
-import ru.veider.domain.model.Category
-import ru.veider.domain.model.Product
+import ru.veider.data.datasources.basket_datasource.BasketDataSource
+import ru.veider.data.datasources.category_datasource.CategoryDataSource
+import ru.veider.data.datasources.product_datasource.ProductDataSource
 
-interface Repo {
-	suspend fun getCategories(): Transport<List<Category>>
-	suspend fun getDishes(): Transport<List<Product>>
+interface Repo:CategoryDataSource, ProductDataSource, BasketDataSource {
+
 }

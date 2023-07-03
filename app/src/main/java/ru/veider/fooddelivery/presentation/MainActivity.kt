@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.badge.BadgeDrawable
 import org.koin.android.ext.android.inject
+import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.ActivityMainBinding
 import ru.veider.fooddelivery.presentation.basket.vm.BasketViewModel
@@ -43,12 +44,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 		badge = binding.bottomNav.getOrCreateBadge(R.id.basketFragment)
 		badge.isVisible = false
 		basketViewModel.basket.observe(this) {
-			if (it.isNotEmpty()) {
-				badge.number = it.size
-				badge.isVisible = true
-			} else {
-				badge.isVisible = false
+			when (it){
+				is ScreenState.Loading -> {}
+				is ScreenState.Success -> {
+					if (it.data.isNotEmpty()) {
+						badge.number = it.data.size
+						badge.isVisible = true
+					} else {
+						badge.isVisible = false
+					}
+				}
+				is ScreenState.Error ->{}
 			}
+
 		}
 	}
 

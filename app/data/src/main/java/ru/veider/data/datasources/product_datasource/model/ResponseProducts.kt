@@ -1,4 +1,4 @@
-package ru.veider.data.datasource.model
+package ru.veider.data.datasources.product_datasource.model
 
 import com.google.gson.annotations.SerializedName
 
