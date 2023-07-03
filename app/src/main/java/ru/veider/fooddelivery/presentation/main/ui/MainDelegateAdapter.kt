@@ -5,13 +5,12 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import ru.veider.domain.model.ICategory
 import ru.veider.fooddelivery.databinding.ItemMainBinding
 import ru.veider.domain.model.Category
-import ru.veider.fooddelivery.presentation.main.ui.MainAdapter
 
-fun mainDelegateAdapter(onClick: MainAdapter.OnClick) = adapterDelegateViewBinding<Category, ICategory, ItemMainBinding>(
+fun mainDelegateAdapter(showCategoryInfo: (Category)->Unit) = adapterDelegateViewBinding<Category, ICategory, ItemMainBinding>(
 	viewBinding = {layoutInflater, root -> ItemMainBinding.inflate(layoutInflater, root, false) }
 ){
 	binding.container.setOnClickListener {
-		onClick.showCategoryInfo(item)
+		showCategoryInfo(item)
 	}
 	bind{
 		binding.apply {

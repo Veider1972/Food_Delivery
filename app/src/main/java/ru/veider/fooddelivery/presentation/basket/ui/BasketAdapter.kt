@@ -5,13 +5,9 @@ import ru.veider.domain.model.IBasket
 import ru.veider.fooddelivery.ru.veider.fooddelivery.presentation.basket.ui.basketDelegateAdapter
 
 class BasketAdapter(
-	onClick: OnClick
-) : ListDelegationAdapter<List<IBasket>>(basketDelegateAdapter(onClick)) {
-
-	interface OnClick {
-		fun increaseCounter(id: Long)
-		fun decreaseCounter(id: Long)
-	}
+	increaseCounter: (Long)->Unit,
+	decreaseCounter: (Long)->Unit
+) : ListDelegationAdapter<List<IBasket>>(basketDelegateAdapter(increaseCounter, decreaseCounter)) {
 
 	init {
 		items = emptyList()

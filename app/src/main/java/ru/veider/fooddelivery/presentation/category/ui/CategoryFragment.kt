@@ -1,5 +1,6 @@
 package ru.veider.fooddelivery.presentation.category.ui
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -17,7 +18,6 @@ import org.koin.android.ext.android.inject
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.CustomTabBinding
 import ru.veider.fooddelivery.databinding.FragmentCategoryBinding
-import ru.veider.domain.model.Product
 import ru.veider.core.datatype.ScreenState
 import ru.veider.fooddelivery.presentation.product.ui.ProductFragment
 import ru.veider.fooddelivery.presentation.account.vm.AccountViewModel
@@ -53,7 +53,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
 		selectedTag?.run {
-			outState.putString(STORED_TAG,this)
+			outState.putString(STORED_TAG, this)
 		}
 	}
 
@@ -64,22 +64,19 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 	}
 
 	private fun workToAdapter() {
-		adapter = CategoryAdapter(
-			object : CategoryAdapter.OnClick {
-				override fun showDishInfo(product: Product) {
-					findNavController().navigate(
-						R.id.action_categoryFragment_to_productFragment,
-						bundleOf(
-							ProductFragment.ID to product.id,
-							ProductFragment.IMAGE to product.imageUrl,
-							ProductFragment.TITLE to product.name,
-							ProductFragment.PRICE to product.price,
-							ProductFragment.WEIGHT to product.weight,
-							ProductFragment.DESC to product.description
-						)
-					)
-				}
-			})
+		adapter = CategoryAdapter { product ->
+			findNavController().navigate(
+				R.id.action_categoryFragment_to_productFragment,
+				bundleOf(
+					ProductFragment.ID to product.id,
+					ProductFragment.IMAGE to product.imageUrl,
+					ProductFragment.TITLE to product.name,
+					ProductFragment.PRICE to product.price,
+					ProductFragment.WEIGHT to product.weight,
+					ProductFragment.DESC to product.description
+				)
+			)
+		}
 
 		binding.dishesList.adapter = adapter
 	}
@@ -113,17 +110,17 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 		}
 	}
 
-	private fun clickButtonBySelectedTag(){
-		binding.radioGroup.children.forEach { buttonContainer->
+	private fun clickButtonBySelectedTag() {
+		binding.radioGroup.children.forEach { buttonContainer ->
 			buttonContainer.findViewById<RadioButton>(R.id.button)?.run {
-				if (text == selectedTag){
+				if (text == selectedTag) {
 					performClick()
 				}
 			}
 		}
 	}
 
-	private fun addButton(text:String, isChecked:Boolean){
+	private fun addButton(text: String, isChecked: Boolean) {
 		val button = CustomTabBinding.inflate(LayoutInflater.from(requireContext())).apply {
 			button.text = text
 			button.check(isChecked)
@@ -148,6 +145,7 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 			setTextAppearance(R.style.TabItemNameUnselected)
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	private fun workToDishes() {
 		categoryViewModel.getDishes().observe(viewLifecycleOwner) {
 			when (it) {
@@ -158,11 +156,11 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 				is ScreenState.Success -> {
 					dishesShimmer(false)
 					val tag = selectedTag
-					if (tag != null){
+					if (tag != null) {
 						filterDishesByTag(tag)
 					} else {
 						adapter.items = it.data
-						adapter.notifyItemRangeChanged(0, it.data.size-1)
+						adapter.notifyDataSetChanged()
 					}
 				}
 
@@ -175,12 +173,13 @@ class CategoryFragment : Fragment(R.layout.fragment_category) {
 		}
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	private fun filterDishesByTag(tag: String) {
 		if (categoryViewModel.dishesDataList.value is ScreenState.Success) {
 			val list = (categoryViewModel.dishesDataList.value as ScreenState.Success).data
 			val filteredList = list.filter { tag in it.tags }
 			adapter.items = filteredList
-			adapter.notifyItemRangeChanged(0, filteredList.size-1)
+			adapter.notifyDataSetChanged()
 			if (filteredList.isNotEmpty()) {
 				binding.dishesList.post {
 					binding.dishesList.smoothScrollToPosition(0)
