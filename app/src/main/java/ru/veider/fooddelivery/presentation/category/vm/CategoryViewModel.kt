@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.veider.core.datatype.ScreenState
+import ru.veider.core.datatype.Transport
 import ru.veider.usecases.UseCases
 import ru.veider.domain.model.Product
 
@@ -12,37 +14,36 @@ class CategoryViewModel(
 	private val useCases: UseCases
 ) : ViewModel() {
 
-	private val _productList = MutableLiveData<ru.veider.core.datatype.ScreenState<List<Product>>>()
+	private val _productList = MutableLiveData<ScreenState<List<Product>>>()
 	val dishesDataList get() = _productList
-	fun getDishes(): LiveData<ru.veider.core.datatype.ScreenState<List<Product>>> {
+	fun getDishes(): LiveData<ScreenState<List<Product>>> {
 		viewModelScope.launch {
-			_productList.postValue(ru.veider.core.datatype.ScreenState.Loading())
-			when (val categories = useCases.getDishes()) {
-				is ru.veider.core.datatype.Transport.Success -> _productList.postValue(ru.veider.core.datatype.ScreenState.Success(categories.data))
-				is ru.veider.core.datatype.Transport.Error -> _productList.postValue(ru.veider.core.datatype.ScreenState.Error(categories.error))
+			_productList.postValue(ScreenState.Loading())
+			when (val categories = useCases.getProducts()) {
+				is Transport.Success -> _productList.postValue(ScreenState.Success(categories.data))
+				is Transport.Error -> _productList.postValue(ScreenState.Error(categories.error))
 			}
 		}
 		return _productList
 	}
 
-	private val _tagList = MutableLiveData<ru.veider.core.datatype.ScreenState<List<String>>>()
-	fun getTags(): LiveData<ru.veider.core.datatype.ScreenState<List<String>>> {
+	private val _tagList = MutableLiveData<ScreenState<List<String>>>()
+	fun getTags(): LiveData<ScreenState<List<String>>> {
 		viewModelScope.launch {
-			_tagList.postValue(ru.veider.core.datatype.ScreenState.Loading())
-			when (val categories = useCases.getDishes()) {
-				is ru.veider.core.datatype.Transport.Success -> {
+			_tagList.postValue(ScreenState.Loading())
+			when (val categories = useCases.getProducts()) {
+				is Transport.Success -> {
 					val array = mutableSetOf<String>()
 					categories.data.forEach {
 						it.tags.forEach { tag->
 							array.add(tag)
 						}
 					}
-					_tagList.postValue(ru.veider.core.datatype.ScreenState.Success(array.toList()))
+					_tagList.postValue(ScreenState.Success(array.toList()))
 				}
-				is ru.veider.core.datatype.Transport.Error -> _tagList.postValue(ru.veider.core.datatype.ScreenState.Error(categories.error))
+				is Transport.Error -> _tagList.postValue(ScreenState.Error(categories.error))
 			}
 		}
 		return _tagList
 	}
-
 }

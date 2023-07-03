@@ -33,6 +33,7 @@
     <string name="basket_paid_message">Заказ оформлен</string>
     <string name="add_button">Увеличить количество</string>
     <string name="substract_button">Уменьшить количество</string>
+    <string name="basket_load_error">Не удалось получить данные корзины</string>
 
     //Account
     <string name="location">Москва</string>

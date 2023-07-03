@@ -1,77 +1,90 @@
 package ru.veider.fooddelivery.presentation.basket.vm
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import ru.veider.core.datatype.ScreenState
+import ru.veider.core.datatype.Transport
 import ru.veider.domain.model.Basket
+import ru.veider.usecases.UseCases
 import java.lang.Exception
 
 class BasketViewModel(
-	private val application: Application,
-	private val gson: Gson
-) : AndroidViewModel(application) {
+	private val useCases: UseCases
+) : ViewModel() {
 
 	private var basketData = mutableListOf<Basket>()
-	private val _basket = MutableLiveData<List<Basket>>()
-	val basket: LiveData<List<Basket>> get() = _basket
+	private val _basket = MutableLiveData<ScreenState<List<Basket>>>()
+	val basket: LiveData<ScreenState<List<Basket>>> get() = _basket
 
-	private val prefs by lazy { application.getSharedPreferences(DELIVERY, Context.MODE_PRIVATE) }
+	private val _paidBasket = MutableLiveData<ScreenState<Boolean>>()
 
 	init {
 		loadBasket()
 	}
 
 	fun addProduct(product: Basket) {
-		try {
-			val index = basketData.getIndex(product)
-			basketData[index].counter++
-		} catch (e: Exception) {
-			basketData.add(
-				Basket(
-					id = product.id,
-					name = product.name,
-					imageUrl = product.imageUrl,
-					price = product.price,
-					weight = product.weight,
-					counter = 1
+		viewModelScope.launch {
+			try {
+				val index = basketData.getIndex(product)
+				basketData[index].counter++
+			} catch (e: Exception) {
+				basketData.add(
+					Basket(
+						id = product.id,
+						name = product.name,
+						imageUrl = product.imageUrl,
+						price = product.price,
+						weight = product.weight,
+						counter = 1
+					)
 				)
-			)
+			}
+			storeBasket(basketData)
 		}
-		_basket.value = basketData
-		storeBasket()
 	}
 
 	fun plusProduct(id: Long) {
-		try {
-			val index = basketData.getIndex(id)
-			basketData[index].counter++
-		} catch (_: Exception) {
+		viewModelScope.launch {
+			try {
+				val index = basketData.getIndex(id)
+				basketData[index].counter++
+				storeBasket(basketData)
+			} catch (_: Exception) {
+			}
 		}
-		_basket.value = basketData
-		storeBasket()
 	}
 
 	fun minusProduct(id: Long) {
-		try {
-			val index = basketData.getIndex(id)
-			basketData[index].counter--
-			if (basketData[index].counter == 0)
-				basketData.removeAt(index)
-		} catch (_: Exception) {
+		viewModelScope.launch {
+			try {
+				val index = basketData.getIndex(id)
+				basketData[index].counter--
+				if (basketData[index].counter == 0)
+					basketData.removeAt(index)
+				storeBasket(basketData)
+			} catch (_: Exception) {
+			}
 		}
-		_basket.value = basketData
-		storeBasket()
 	}
 
-	fun clearBasket(){
-		basketData.clear()
-		_basket.value = basketData
-		storeBasket()
+	fun payBasket():LiveData<ScreenState<List<Basket>>>{
+		_paidBasket.value = ScreenState.Loading()
+		viewModelScope.launch {
+			when (val result = useCases.payBasket(basketData)){
+				is Transport.Success -> {
+					basketData.clear()
+					storeBasket(basketData)
+					_paidBasket.postValue(ScreenState.Success(true))
+				}
+				is Transport.Error -> {
+					_paidBasket.postValue(ScreenState.Error(result.error))
+				}
+			}
+		}
+		return basket
 	}
 
 	private fun MutableList<Basket>.getIndex(productData: Basket): Int = getIndex(productData.id)
@@ -84,28 +97,34 @@ class BasketViewModel(
 		throw ArrayIndexOutOfBoundsException()
 	}
 
-	private fun storeBasket() {
-		prefs?.run {
-			viewModelScope.launch {
-				val list = gson.toJson(basketData)
-				edit().putString(BASKET, list).apply()
+	private fun storeBasket(data: List<Basket>) {
+		_basket.value = ScreenState.Loading()
+		viewModelScope.launch {
+			when (val basketList = useCases.storeBasket(data)) {
+				is Transport.Success -> {
+					_basket.postValue(ScreenState.Success(basketList.data))
+				}
+
+				is Transport.Error -> {
+					_basket.postValue(ScreenState.Error(basketList.error))
+				}
 			}
 		}
 	}
 
 	private fun loadBasket() {
-		prefs?.run {
-			val list = getString(BASKET, null)
-			list?.run {
-				val basketList = gson.fromJson(list, Array<Basket>::class.java)
-				basketData = basketList.toMutableList()
-				_basket.value = basketData
+		_basket.value = ScreenState.Loading()
+		viewModelScope.launch {
+			when (val basketList = useCases.loadBasket()) {
+				is Transport.Success -> {
+					basketData = basketList.data.toMutableList()
+					_basket.postValue(ScreenState.Success(basketData))
+				}
+
+				is Transport.Error -> {
+					_basket.postValue(ScreenState.Error(basketList.error))
+				}
 			}
 		}
-	}
-
-	companion object {
-		private const val DELIVERY = "deliveryPreferences"
-		private const val BASKET = "basket"
 	}
 }

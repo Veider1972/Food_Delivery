@@ -60,7 +60,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 				is ScreenState.Error -> {
 					accountShimmer(false)
 					it.error.printStackTrace()
-					Toast.makeText(requireContext(), getString(R.string.load_category_error), Toast.LENGTH_LONG).show()
+					Toast.makeText(requireContext(), getString(R.string.load_account_error), Toast.LENGTH_LONG).show()
 				}
 			}
 		}
@@ -69,11 +69,11 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 	@SuppressLint("NotifyDataSetChanged")
 	private fun workToAdapter() {
 		adapter = BasketAdapter(
-			{id->
+			{ id ->
 				basketViewModel.plusProduct(id)
 				adapter.notifyDataSetChanged()
 			},
-			{id->
+			{ id ->
 				basketViewModel.minusProduct(id)
 				adapter.notifyDataSetChanged()
 			}
@@ -81,33 +81,56 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 		binding.basketList.adapter = adapter
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	private fun workToBasket() {
-		basketViewModel.basket.observe(viewLifecycleOwner) { productList ->
-			if (productList.isNotEmpty()) {
-				basketShimmer(false)
-				val list = mutableListOf<Basket>()
-				productList.forEach { product ->
-					list.add(product.copy())
+		basketViewModel.basket.observe(viewLifecycleOwner) {
+			when (it) {
+				is ScreenState.Loading -> {
+					basketShimmer(true)
 				}
-				adapter.items = list
-				val sum = productList.sumOf { it.price * it.counter }
-				binding.paidButton.text = getString(R.string.basket_pay_button_title, "%,d".format(Locale("RU"), sum))
-			} else {
-				basketShimmer(true)
+
+				is ScreenState.Success -> {
+					val list = mutableListOf<Basket>()
+					it.data.forEach { product ->
+						list.add(product.copy())
+					}
+					adapter.items = list
+					adapter.notifyDataSetChanged()
+					binding.paidButton.isVisible = list.isNotEmpty()
+					binding.emptyBasketText.isVisible = list.isEmpty()
+					val sum = it.data.sumOf { it.price * it.counter }
+					binding.paidButton.text = getString(R.string.basket_pay_button_title, "%,d".format(Locale("RU"), sum))
+					basketEmpty(list.isEmpty())
+				}
+
+				is ScreenState.Error -> {
+					basketShimmer(false)
+					it.error.printStackTrace()
+					Toast.makeText(requireContext(), getString(R.string.basket_load_error), Toast.LENGTH_LONG).show()
+				}
 			}
+
 		}
 	}
 
 	private fun workToPaidButton() {
 		binding.paidButton.setOnClickListener {
-			basketViewModel.clearBasket()
-			binding.emptyBasketText.text = getString(R.string.basket_paid_message)
-			CoroutineScope(Dispatchers.IO).launch {
-				delay(2000)
-				withContext(Dispatchers.Main) {
-					binding.emptyBasketText.text = getString(R.string.basket_empty)
+			basketViewModel.payBasket().observe(viewLifecycleOwner){
+				when (it){
+					is ScreenState.Loading -> {}
+					is ScreenState.Success -> {
+						binding.emptyBasketText.text = getString(R.string.basket_paid_message)
+						CoroutineScope(Dispatchers.IO).launch {
+							delay(2000)
+							withContext(Dispatchers.Main) {
+								binding.emptyBasketText.text = getString(R.string.basket_empty)
+							}
+						}
+					}
+					is ScreenState.Error -> {}
 				}
 			}
+
 		}
 	}
 
@@ -132,6 +155,10 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 			basketLoading.isVisible = state
 			basketContainer.isVisible = !state
 		}
+	}
+
+	private fun basketEmpty(state:Boolean){
+		basketShimmer(state)
 	}
 
 }
