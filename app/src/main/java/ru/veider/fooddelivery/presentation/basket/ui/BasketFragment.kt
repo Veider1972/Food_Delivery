@@ -1,5 +1,6 @@
 package ru.veider.fooddelivery.presentation.basket.ui
 
+import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -65,16 +66,18 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 		}
 	}
 
+	@SuppressLint("NotifyDataSetChanged")
 	private fun workToAdapter() {
-		adapter = BasketAdapter(object : BasketAdapter.OnClick {
-			override fun increaseCounter(id: Long) {
+		adapter = BasketAdapter(
+			{id->
 				basketViewModel.plusProduct(id)
-			}
-
-			override fun decreaseCounter(id: Long) {
+				adapter.notifyDataSetChanged()
+			},
+			{id->
 				basketViewModel.minusProduct(id)
+				adapter.notifyDataSetChanged()
 			}
-		})
+		)
 		binding.basketList.adapter = adapter
 	}
 
@@ -95,13 +98,13 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 		}
 	}
 
-	private fun workToPaidButton(){
+	private fun workToPaidButton() {
 		binding.paidButton.setOnClickListener {
 			basketViewModel.clearBasket()
 			binding.emptyBasketText.text = getString(R.string.basket_paid_message)
 			CoroutineScope(Dispatchers.IO).launch {
 				delay(2000)
-				withContext(Dispatchers.Main){
+				withContext(Dispatchers.Main) {
 					binding.emptyBasketText.text = getString(R.string.basket_empty)
 				}
 			}

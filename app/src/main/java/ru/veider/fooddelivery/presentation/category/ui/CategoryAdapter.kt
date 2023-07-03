@@ -5,10 +5,7 @@ import ru.veider.domain.model.IProduct
 import ru.veider.domain.model.Product
 import ru.veider.fooddelivery.ru.veider.fooddelivery.presentation.category.ui.categoryDelegateAdapter
 
-class CategoryAdapter(onClick: OnClick) : ListDelegationAdapter<List<IProduct>>(categoryDelegateAdapter(onClick)) {
-	interface OnClick {
-		fun showDishInfo(product: Product)
-	}
+class CategoryAdapter(showDishInfo: (Product)->Unit) : ListDelegationAdapter<List<IProduct>>(categoryDelegateAdapter(showDishInfo)) {
 	init {
 		items = emptyList()
 	}

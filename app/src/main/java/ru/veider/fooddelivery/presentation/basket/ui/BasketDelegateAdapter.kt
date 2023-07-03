@@ -6,16 +6,15 @@ import ru.veider.domain.model.Basket
 import ru.veider.domain.model.IBasket
 import ru.veider.fooddelivery.R
 import ru.veider.fooddelivery.databinding.ItemBasketBinding
-import ru.veider.fooddelivery.presentation.basket.ui.BasketAdapter
 
-fun basketDelegateAdapter(onClick: BasketAdapter.OnClick) = adapterDelegateViewBinding<Basket, IBasket, ItemBasketBinding>(
+fun basketDelegateAdapter(increaseCounter: (Long)->Unit, decreaseCounter: (Long)->Unit) = adapterDelegateViewBinding<Basket, IBasket, ItemBasketBinding>(
 	viewBinding = {layoutInflater, root -> ItemBasketBinding.inflate(layoutInflater, root, false) }
 ){
 	binding.counterPlus.setOnClickListener {
-		onClick.increaseCounter(item.id)
+		increaseCounter(item.id)
 	}
 	binding.counterMinus.setOnClickListener {
-		onClick.decreaseCounter(item.id)
+		decreaseCounter(item.id)
 	}
 
 	bind{
